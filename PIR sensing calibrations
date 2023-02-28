@@ -1,0 +1,44 @@
+import RPi.GPIO as GPIO
+import time
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(11, GPIO.IN)         #Read output from PIR motion sensor
+GPIO.setup(3, GPIO.OUT)         #LED output pin
+while True:
+i=GPIO.input(11)
+if i==0:                 #When output from motion sensor is LOW
+print "No intruders",i
+GPIO.output(3, 0)  #Turn OFF LED
+time.sleep(0.1)
+elif i==1:               #When output from motion sensor is HIGH
+print "Intruder detected",i
+GPIO.output(3, 1)  #Turn ON LED
+time.sleep(0.1)
+
+
+---------------------------------------------------------------------------------------------
+
+
+
+ Alternative 
+  check with bd, mc eorter 
+  '''
+	Motion detection using PIR on raspberry Pi
+	http://www.electronicwings.com
+'''
+import RPi.GPIO as GPIO
+
+PIR_input = 29				#read PIR Output
+LED = 32				#LED for signalling motion detected	
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD)		#choose pin no. system
+GPIO.setup(PIR_input, GPIO.IN)	
+GPIO.setup(LED, GPIO.OUT)
+GPIO.output(LED, GPIO.LOW)
+
+while True:
+#when motion detected turn on LED
+    if(GPIO.input(PIR_input)):
+        GPIO.output(LED, GPIO.HIGH)
+    else:
+        GPIO.output(LED, GPIO.LOW)
